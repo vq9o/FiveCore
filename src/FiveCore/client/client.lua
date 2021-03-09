@@ -103,13 +103,13 @@ if Admin == true then
     AOP.Activated = function()
       local ChoosenAOP = tonumber(KeyboardInput('Area Of Play'))
       if ChoosenAOP == nil then
-          exports["mythic_notify"]:DoHudText("error", "Must choose a area of play")
+          exports["mythic_notify"]:DoHudText("error", "Must choose an Area of Play")
           return
         else
           TriggerServerEvent("FiveCore:AOP", ChoosenAOP)
       end
     end
-    local Revive = _menuPool:AddSubMenu(AdminMenu, "Revive Player", "Revive an player")
+    local Revive = _menuPool:AddSubMenu(AdminMenu, "Revive Player", "Revive a player")
     Revive:SetMenuWidthOffset(80)
     Revive.Activated = function()
       local PlayerID = tonumber(KeyboardInput('Player ID:', 10))
