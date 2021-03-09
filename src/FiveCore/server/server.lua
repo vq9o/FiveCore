@@ -12,6 +12,7 @@ AddEventHandler('playerConnecting', function(name, kick)
         CancelEvent()
     end
 end)
+
 RegisterServerEvent("checkMyPingBro")
 RegisterServerEvent("FiveCore.getIsEmergency")
 RegisterServerEvent("FiveCore.getIsAdmin")
