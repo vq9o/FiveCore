@@ -8,12 +8,13 @@ version '0.1'
 
 client_scripts {
   'resources/NativeUI.lua',
-  'client.lua',
+  'client/client.lua',
+  'client/fivecops.lua',
   'functions.lua'
 }
 
 server_scripts {
   'config.lua',
-  'server.lua',
+  'server/server.lua',
   'functions.lua'
 }
