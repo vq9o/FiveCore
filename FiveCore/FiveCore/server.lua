@@ -3,7 +3,7 @@ RegisterServerEvent("FiveCore.getIsAdmin")
 RegisterServerEvent('playerConnecting')
 
 RegisterCommand('admin', function(source, args, rawCommand)
-  TriggerClientEvent("FiveCore:Menu", source, true)
+    TriggerClientEvent("FiveCore:Menu", source, true)
 end)
 
 AddEventHandler("FiveCore.getIsAdmin", function(source)
@@ -23,18 +23,16 @@ AddEventHandler("FiveCore.getIsEmergency", function(source)
 end)
 
 AddEventHandler('playerConnecting', function(name, kick)
-	local license
-	for k,v in ipairs(GetPlayerIdentifiers(source))do
-		if string.sub(v, 1, string.len("license:")) == "license:" then
-			license = v
-			break
-		end
-	end
+    local license
+    for k,v in ipairs(GetPlayerIdentifiers(source))do
+        if string.sub(v, 1, string.len("license:")) == "license:" then
+            license = v
+            break
+        end
+    end
 
-	if not license then
-		kick("No username, please restart FiveM")
-		CancelEvent()
-  else
-
-	end
+    if not license then
+        kick("No username, please restart FiveM")
+        CancelEvent()
+    end
 end)
