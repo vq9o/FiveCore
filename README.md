@@ -1,9 +1,8 @@
-# FiveCore
-FiveM Menu
-## Maintainers:
+## Installation
+Soon.
 
-[jakeyys](https://github.com/jakeyys) (Project Manager)
+## Documentation
+Soon.
 
-[verbxtim](https://github.com/verbxtim) (Lead Maintainer)
-
-[pasdalover](https://github.com/XxMeMeBigBoyxX) (Maintainer)
+## Notes
+Script barley functions, still in development

@@ -2,10 +2,32 @@ local Emergency = false
 local Admin = false
 local SecondsUntilKick = 0
 SecondsUntilKick = Config.AFKTime
+
+RegisterNetEvent("FiveCore:returnIsEmergency")
+RegisterNetEvent("FiveCore:returnIsAdmin")
+RegisterNetEvent("FiveCore:Menu")
+AddEventHandler("FiveCore:returnIsEmergency", function(bool)
+    if bool == true then
+	Emergency = true 
+	else
+	Emergency = false
+	end
+end)
+AddEventHandler("FiveCore:returnIsAdmin", function(bool)
+    if bool == true then
+	Admin = true 
+	else
+	Admin = false
+	end
+end)
+AddEventHandler("FiveCore:Menu", function()
+    Menu:Visible(not Menu:Visible())
+end)
+
 Citizen.CreateThread(function()
-    TriggerEvent('chat:addSuggestion', '/fivecore', 'Open Menu')
     TriggerServerEvent("FiveCore:getIsEmergency")
     TriggerServerEvent("FiveCore:getIsAdmin")
+    TriggerEvent('chat:addSuggestion', '/fivecore', 'Open Menu')
     while true do
         Wait(1000)
         PlayerPed = GetPlayerPed(-1)
@@ -44,22 +66,11 @@ Citizen.CreateThread(function()
             end
             PrevPos = currentPos
         end
-        TriggerServerEvent("FiveCore:PingPonglol")
+        TriggerServerEvent("FiveCore:Ping")
     end
 end)
 
-RegisterNetEvent("FiveCore:returnIsEmergency")
-RegisterNetEvent("FiveCore:returnIsAdmin")
-RegisterNetEvent("FiveCore:Menu")
-AddEventHandler("FiveCore:returnIsEmergency", function(bool)
-    Emergency = bool
-end)
-AddEventHandler("FiveCore:returnIsAdmin", function(bool)
-    Admin = bool
-end)
-AddEventHandler("FiveCore:Menu", function(bool)
-    Menu:Visible(not Menu:Visible())
-end)
+
 
 _menuPool = NativeUI.CreatePool()
 Menu = NativeUI.CreateMenu(GetPlayerName(source), "~b~FiveCore Framework", Config.Orientation)
@@ -95,7 +106,7 @@ if Admin == true then
           exports["mythic_notify"]:DoHudText("error", "Must choose your announcement to say")
           return
         else
-          TriggerServerEvent("FiveCore:Announce", table.concat(Announcement, " ");)
+          TriggerServerEvent("FiveCore:Announce", table.concat(Announcement, " "))
       end
     end
     local AOP = _menuPool:AddSubMenu(AdminMenu, "Area Of Play", "Change Area Of Play")
@@ -134,7 +145,7 @@ if Admin == true then
 end
 
 
-function ResponderMenu()
+function FirstResponderMenu()
     local FirstResponderMenu = _menuPool:AddSubMenu(Menu, 'First Responders', 'Police & Fire Related Options', true)
     FirstResponderMenu:SetMenuWidthOffset(80)
     local LEOActions = _menuPool:AddSubMenu(FirstResponderMenu, 'Police', 'Law Enforcement Actions', true)
@@ -150,7 +161,7 @@ function ResponderMenu()
     local Unseatv2 = NativeUI.CreateItem("Unseat", "Unseat closest player")
     local Unseat = NativeUI.CreateItem("Unseat", "Unseat closest player")
     local Spikes = NativeUI.CreateItem("Deploy Spikes", "Deploy Spikes")
-    local RemoveSpikes = NativeUI.CreateItem("Remove Spikes", "Remove Spikes")
+    local DelSpikes = NativeUI.CreateItem("Remove Spikes", "Remove Spikes")
     local Inventory = NativeUI.CreateItem('Inventory', 'Search the closest player\'s inventory')
     local BAC = NativeUI.CreateItem('BAC', 'Test the BAC level of the closest player')
     local Jail = NativeUI.CreateItem('Jail', 'Jail a player')
@@ -468,7 +479,7 @@ function PlayerActions()
         local EmotesMenu = _menuPool:AddSubMenu(PlayerMenu, "Emotes Menu")
     end
     if Config.WeaponMenu == true then
-        WeaponsMenu = _menuPool:AddSubMenu(PlayerMenu, "Weapons Menu", "Weapon Releated Options", true)
+        local WeaponsMenu = _menuPool:AddSubMenu(PlayerMenu, "Weapons Menu", "Weapon Releated Options", true)
         local GunList = NativeUI.CreateListItem("Weapons", Config.Weapons, 1)
         local ClearWeapons = NativeUI.CreateItem("~r~ Clear Weapon(s)", "Removes all Weapons in inventory")
         local GiveAll = NativeUI.CreateItem("~b~Give All Weapons", "Gives all weapons in the server")
@@ -479,44 +490,44 @@ function PlayerActions()
             exports["mythic_notify"]:DoHudText("success", "Weapons Removed")
         end
         GiveAll.Activated = function(ParentMenu, SelectedItem)
-            giveWeapon("weapon_knife")
-            giveWeapon("weapon_knightstick")
-            giveWeapon("weapon_hammer")
-            giveWeapon("weapon_bat")
-            giveWeapon("weapon_crowbar")
-            giveWeapon("weapon_golfclub")
-            giveWeapon("weapon_pistol")
-            giveWeapon("weapon_combatpistol")
-            giveWeapon("weapon_appistol")
-            giveWeapon("weapon_pistol50")
-            giveWeapon("weapon_microsmg")
-            giveWeapon("weapon_smg")
-            giveWeapon("weapon_assaultsmg")
-            giveWeapon("weapon_assaultrifle")
-            giveWeapon("weapon_carbinerifle")
-            giveWeapon("weapon_advancedrifle")
-            giveWeapon("weapon_pumpshotgun")
-            giveWeapon("weapon_fireextinguisher")
-            giveWeapon("weapon_flare")
-            giveWeapon("weapon_snspistol")
-            giveWeapon("weapon_heavypistol")
-            giveWeapon("weapon_bullpuprifle")
-            giveWeapon("weapon_dagger")
-            giveWeapon("weapon_vintagepistol")
-            giveWeapon("weapon_firework")
-            giveWeapon("weapon_flaregun")
-            giveWeapon("weapon_marksmanpistol")
-            giveWeapon("weapon_knuckle")
-            giveWeapon("weapon_hatchet")
-            giveWeapon("weapon_switchblade")
-            giveWeapon("weapon_revolver")
-            giveWeapon("weapon_battleaxe")
-            giveWeapon("weapon_minismg")
-            giveWeapon("weapon_poolcue")
-            giveWeapon("weapon_wrench")
+            GiveWeapon("weapon_knife")
+            GiveWeapon("weapon_knightstick")
+            GiveWeapon("weapon_hammer")
+            GiveWeapon("weapon_bat")
+            GiveWeapon("weapon_crowbar")
+            GiveWeapon("weapon_golfclub")
+            GiveWeapon("weapon_pistol")
+            GiveWeapon("weapon_combatpistol")
+            GiveWeapon("weapon_appistol")
+            GiveWeapon("weapon_pistol50")
+            GiveWeapon("weapon_microsmg")
+            GiveWeapon("weapon_smg")
+            GiveWeapon("weapon_assaultsmg")
+            GiveWeapon("weapon_assaultrifle")
+            GiveWeapon("weapon_carbinerifle")
+            GiveWeapon("weapon_advancedrifle")
+            GiveWeapon("weapon_pumpshotgun")
+            GiveWeapon("weapon_fireextinguisher")
+            GiveWeapon("weapon_flare")
+            GiveWeapon("weapon_snspistol")
+            GiveWeapon("weapon_heavypistol")
+            GiveWeapon("weapon_bullpuprifle")
+            GiveWeapon("weapon_dagger")
+            GiveWeapon("weapon_vintagepistol")
+            GiveWeapon("weapon_firework")
+            GiveWeapon("weapon_flaregun")
+            GiveWeapon("weapon_marksmanpistol")
+            GiveWeapon("weapon_knuckle")
+            GiveWeapon("weapon_hatchet")
+            GiveWeapon("weapon_switchblade")
+            GiveWeapon("weapon_revolver")
+            GiveWeapon("weapon_battleaxe")
+            GiveWeapon("weapon_minismg")
+            GiveWeapon("weapon_poolcue")
+            GiveWeapon("weapon_wrench")
             exports["mythic_notify"]:DoHudText("success", "Weapons Added")
         end
-        WeaponMenu.OnListSelect = function(sender, item, index)
+        WeaponsMenu.OnListSelect = function(sender, item, index)
             if item == GunList then
                 local Gun = item:IndexToItem(index)
                 GiveWeapon(Gun)
@@ -528,8 +539,8 @@ end
 function VehicleSpawner()
     if Config.VehicleSpawner == true then
         VehicleSpawner = _menuPool:AddSubMenu(VehicleMenu, "Vehicle Spawner", "Spawn Vehicles", true)
-        local EmergencyVehicles = NativeUI.CreateListItem("Spawn Emergency", Config.EmergencyVehicles, 1)
-        local RegularVehicles = NativeUI.CreateListItem("Spawn Vehicle", Config.Vehicles, 1)
+        local EmergencyVehicles = NativeUI.CreateListItem("Spawn Emergency", Config.EmergencyVehicles)
+        local RegularVehicles = NativeUI.CreateListItem("Spawn Vehicle", Config.Vehicles)
         VehicleSpawner.OnListSelect = function(sender, item, index)
             if item == EmergencyVehicles then
                 if Emergency then
@@ -575,10 +586,10 @@ function VehicleManager()
     VehicleMenu:AddItem(trunk)
     VehicleMenu:AddItem(repaircar)
     VehicleMenu:AddItem(cleancar)
-    VehicleMenu:AddItem(deletecar)
     VehicleMenu:AddItem(lock)
     VehicleMenu:AddItem(unlock)
-    VehicleMenu:AddItem(Seat)
+    VehicleMenu:AddItem(seat)
+	VehicleMenu:AddItem(deletecar)
     lock.Activated = function(ParentMenu, SelectedItem)
         exports["mythic_notify"]:DoHudText("error", "This feature isn't completed")
     end
@@ -630,7 +641,8 @@ function VehicleManager()
                     exports["mythic_notify"]:DoHudText("error", "You must be the driver of the vehicle")
                 end
             else
-                local playerPos = GetEntityCoords(ped, 1)
+               pcall(function()
+			    local playerPos = GetEntityCoords(ped, 1)
                 local inFrontOfPlayer = GetOffsetFromEntityInWorldCoords(ped, 0.0, distanceToCheck, 0.0)
                 local vehicle = GetVehicleInDirection(playerPos, inFrontOfPlayer)
                 if (DoesEntityExist(vehicle)) then
@@ -644,6 +656,7 @@ function VehicleManager()
                 else
                     exports["mythic_notify"]:DoHudText("error", "You must be the driver of the vehicle")
                 end
+			end)
             end
         end
     end
@@ -721,7 +734,9 @@ VehicleSpawner()
 VehicleManager()
 
 if Config.FirstResponderMenu == true then
+if Emergency == true then
     FirstResponderMenu()
+end
 end
 
 _menuPool:RefreshIndex()
@@ -729,6 +744,7 @@ _menuPool:RefreshIndex()
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
+		_menuPool:RefreshIndex()
         _menuPool:ProcessMenus()
         if IsControlJustPressed(1, Config.MenuButton) then
             Menu:Visible(not Menu:Visible())

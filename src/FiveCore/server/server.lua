@@ -1,3 +1,9 @@
+RegisterServerEvent("FiveCore:getIsEmergency")
+RegisterServerEvent("FiveCore:getIsAdmin")
+RegisterServerEvent('playerConnecting')
+RegisterServerEvent("FiveCore:AFKBoot")
+RegisterServerEvent("FiveCore:Ping")
+
 AddEventHandler('playerConnecting', function(name, kick)
     local license
     for k,v in ipairs(GetPlayerIdentifiers(source))do
@@ -13,17 +19,11 @@ AddEventHandler('playerConnecting', function(name, kick)
     end
 end)
 
-RegisterServerEvent("checkMyPingBro")
-RegisterServerEvent("FiveCore.getIsEmergency")
-RegisterServerEvent("FiveCore.getIsAdmin")
-RegisterServerEvent('playerConnecting')
-RegisterServerEvent("FiveCore:AFKBoot")
-
 AddEventHandler("FiveCore:AFKBoot", function()
 	DropPlayer(source, "You were AFK for too long.")
 end)
 
-AddEventHandler("PingPonglol", function()
+AddEventHandler("FiveCore:Ping", function()
 	ping = GetPlayerPing(source)
 	if Config.HighPingKick == true then
     if ping >= Config.PingLimit then
@@ -33,20 +33,20 @@ AddEventHandler("PingPonglol", function()
 end)
 
 RegisterCommand('admin', function(source, args, rawCommand)
-    TriggerClientEvent("FiveCore:Menu", source, true)
+    TriggerClientEvent("FiveCore:Menu", source)
 end)
 
-AddEventHandler("FiveCore.getIsAdmin", function(source)
-    if IsPlayerAceAllowed(source, "fivecore.admin") or IsPlayerAceAllowed(source, "group.admin") then
-        TriggerClientEvent("FiveCore.returnIsAdmin", source, true)
+AddEventHandler("FiveCore:getIsAdmin", function()
+    if IsPlayerAceAllowed(source, "fivecore.admin") then
+        TriggerClientEvent("FiveCore:returnIsAdmin", source, true)
     else
-        TriggerClientEvent("FiveCore.returnIsAdmin", source, false)
+        TriggerClientEvent("FiveCore:returnIsAdmin", source, false)
     end
 end)
 
-AddEventHandler("FiveCore.getIsEmergency", function(source)
+AddEventHandler("FiveCore:getIsEmergency", function()
 --    if IsPlayerAceAllowed(source, "fivecore.emergency") then
-        TriggerClientEvent("FiveCore.returnIsEmergency", source, true)
+        TriggerClientEvent("FiveCore:returnIsEmergency", source, true)
   --  else
 --        TriggerClientEvent("FiveCore.returnIsEmergency", source, false)
 --    end
