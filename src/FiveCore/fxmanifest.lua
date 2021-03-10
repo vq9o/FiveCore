@@ -8,6 +8,7 @@ version '0.1'
 
 client_scripts {
   'resources/NativeUI.lua',
+  'config.lua',
   'client/client.lua',
   'client/fivecops.lua',
   'functions.lua'

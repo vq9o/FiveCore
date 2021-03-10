@@ -133,7 +133,7 @@ function PlayEmote(Emote, Name)
     end
 
     if IsPedInAnyVehicle(GetPlayerPed(-1)) then
-        ShowNotification('~r~Please exit the vehicle to use this emote!')
+        ShowNotification('Please exit the vehicle to use this emote!')
         return
     end
 

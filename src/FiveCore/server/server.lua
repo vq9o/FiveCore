@@ -37,7 +37,7 @@ RegisterCommand('admin', function(source, args, rawCommand)
 end)
 
 AddEventHandler("FiveCore.getIsAdmin", function(source)
-    if IsPlayerAceAllowed(source, "fivecore.admin") then
+    if IsPlayerAceAllowed(source, "fivecore.admin") or IsPlayerAceAllowed(source, "group.admin") then
         TriggerClientEvent("FiveCore.returnIsAdmin", source, true)
     else
         TriggerClientEvent("FiveCore.returnIsAdmin", source, false)
